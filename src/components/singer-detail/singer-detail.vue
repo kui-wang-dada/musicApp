@@ -1,17 +1,41 @@
 <template>
   <transition name='slide'>
-    <div class='singer-detail'>{{singer.id}}</div>
+
+    <scroll>
+      <div class='singer-detail'>
+        <div v-for='(item,index) in songList'
+             class='song-item'
+             @click='select(item)'
+             :key='index'>
+          <img :src="item.image"
+               class='song-img'
+               alt="">
+          <p>{{item.name}}</p>
+        </div>
+        <audio :src="currentSong.url"
+               autoplay
+               class='audio'></audio>
+      </div>
+
+    </scroll>
+
   </transition>
 
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import {getSingerDetail} from 'api/singer'
+import {createSong} from 'common/js/song.js'
+import Scroll from 'base/scroll/scroll'
+
 export default {
-  components: {},
+  components: {Scroll},
   props: {},
   data() {
     return {
+      songList: [],
+      currentSong: ''
     }
   },
   computed: {
@@ -20,13 +44,28 @@ export default {
     ])
   },
   created() {
-
+    this._getSingerDetail()
   },
   mounted() {
 
   },
   methods: {
-
+    select(item) {
+      this.currentSong = item
+    },
+    _getSingerDetail() {
+      getSingerDetail(this.singer.id).then((res) => {
+        this.songList = this._normalizeSong(res.data.list)
+      })
+    },
+    _normalizeSong(list) {
+      return list.map((item) => {
+        let {musicData} = item
+        if (musicData.songid && musicData.albummid) {
+          return createSong(musicData)
+        }
+      })
+    }
   },
   watch: {
 
@@ -43,7 +82,22 @@ export default {
   right: 0;
   z-index: 100;
   background: $color-background;
+  .song-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    .song-img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  .audio {
+    position: absolute;
+    top: 300px;
+  }
 }
+
+// vue的动画
 .slide-enter-active,
 .slide-leave-active {
   transition: all 0.3s;
