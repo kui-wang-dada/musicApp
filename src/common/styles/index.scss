@@ -1,3 +1,13 @@
+/*
+ * @Author: kuiwang3
+ * @CreateDate: Do not edit
+ * @LastEditors: kuiwang3
+ * @LastEditTime: 2018-10-22 15:12:45
+ * @Description: 全局样式，顺序很重要
+ */
+//  兼容
 @import './reset.scss';
+// 基础样式
 @import './base.scss';
+// 图标
 @import './icon.scss'

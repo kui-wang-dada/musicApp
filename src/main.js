@@ -3,9 +3,9 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+// 移动端快速点击问题
 import fastclick from 'fastclick'
-
+// 导入全局样式
 import 'common/styles/index.scss'
 fastclick.attach(document.body)
 
