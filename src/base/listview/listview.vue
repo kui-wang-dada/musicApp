@@ -5,6 +5,8 @@
           :probe-type="probeType"
           :listen-scroll='listenScroll'
           @scroll='scroll'>
+
+    <!-- 左边页面 -->
     <ul>
       <li v-for='(group,index) in data'
           :key='index'
@@ -22,6 +24,7 @@
         </ul>
       </li>
     </ul>
+    <!-- 右边小图标 -->
     <div class='list-shortcut'
          @touchstart.stop.prevent='onShortcutTouchStart'
          @touchmove.stop.prevent='onShortcutTouchMove'
@@ -36,11 +39,13 @@
         </li>
       </ul>
     </div>
+    <!-- 吸顶效果 -->
     <div class="list-fixed"
          ref="fixed"
          v-show="fixedTitle">
       <div class="fixed-title">{{fixedTitle}} </div>
     </div>
+    <!-- 异步加载数据的loading -->
     <div v-show="!data.length"
          class="loading-container">
       <loading></loading>
