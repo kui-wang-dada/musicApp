@@ -16,6 +16,7 @@
         <ul>
           <li v-for="(item,index) in group.items"
               class="list-group-item"
+              @click='selectItem(item)'
               :key="index">
             <img class="avatar"
                  v-lazy="item.avatar">
@@ -105,6 +106,10 @@ export default {
     }
   },
   methods: {
+    selectItem(item) {
+      console.log(item)
+      this.$emit('select', item)
+    },
     // 右边触碰点击事件
     onShortcutTouchStart(e) {
       let anchorIndex = getData(e.target, 'index') // 拿到点击的index
