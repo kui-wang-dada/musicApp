@@ -1,11 +1,12 @@
 <template>
   <transition name='slide'>
-    <div class='singer-detail'></div>
+    <div class='singer-detail'>{{singer.id}}</div>
   </transition>
 
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   components: {},
   props: {},
@@ -14,7 +15,9 @@ export default {
     }
   },
   computed: {
-
+    ...mapGetters([
+      'singer'
+    ])
   },
   created() {
 
