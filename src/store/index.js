@@ -1,3 +1,10 @@
+/*
+ * @Author: kuiwang3
+ * @CreateDate: Do not edit
+ * @LastEditors: kuiwang3
+ * @LastEditTime: 2018-10-22 19:17:02
+ * @Description: vuex的中枢，需要导入到vue实例中
+ */
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as actions from './actions'

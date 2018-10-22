@@ -13,7 +13,7 @@ import ListView from 'base/listview/listview'
 import {getSingerList} from 'api/singer'
 import Singer from 'common/js/singer'
 import {ERR_OK} from 'api/config'
-import {mapMutations} from 'vuex'
+import {mapMutations} from 'vuex' // mutations语法糖
 
 const HOT_SINGER_LEN = 10
 const HOT_NAME = '热门'
@@ -44,6 +44,7 @@ export default {
       this.$router.push({
         path: `/singer/${singer.id}`
       })
+      // 调用mutations中挂在到methods的方法
       this.setSinger(singer)
     },
     _getSingerList() {
@@ -99,6 +100,7 @@ export default {
       })
       return hot.concat(ret)
     },
+    // 将mutations挂在到方法上
     ...mapMutations({
       setSinger: 'SET_SINGER'
     })
