@@ -5,6 +5,8 @@ import {
 } from './config'
 import axios from 'axios'
 
+// 轮播图数据
+// 对照QQ音乐的接口参数填写Data
 export function getRecommend() {
   const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
 
@@ -15,7 +17,8 @@ export function getRecommend() {
   })
   return jsonp(url, data, options)
 }
-
+// 列表数据
+// 对照QQ音乐的接口参数填写Data
 export function getDiscList() {
   const url = '/api/getDiscList'
 

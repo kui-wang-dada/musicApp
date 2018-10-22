@@ -1,3 +1,10 @@
+/*
+ * @Author: kuiwang3
+ * @CreateDate: Do not edit
+ * @LastEditors: kuiwang3
+ * @LastEditTime: 2018-10-22 15:58:40
+ * @Description: 创建歌手数据类
+ */
 export default class Singer {
   constructor({
     id,

@@ -10,9 +10,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+// 配置node服务器
 const express = require('express')
 const axios = require('axios')
 const app = express()
+// 配置node的路由，当前端路由为/api的时候，会到此地方来
 var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 
@@ -32,7 +34,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+    // node服务器路由具体操作
+    /*
+     *浏览器和服务器之间存在跨域问题，设置本地服务器，通过node服务器请求到数据，在返回给前端。
+     */
     before(app) {
+      // 当前端的请求'/api/getDiscList'时，本node服务器会发送Uri
       app.get('/api/getDiscList', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
         axios.get(url, {

@@ -37,6 +37,7 @@ export default {
 
   },
   methods: {
+    // 拿到歌手数据
     _getSingerList() {
       getSingerList().then((res) => {
         console.log('res', res)
@@ -48,6 +49,7 @@ export default {
         console.log(e)
       })
     },
+    // 对歌手数据做二维数组处理
     _normalizeSinger(list) {
       let map = {
         hot: {
