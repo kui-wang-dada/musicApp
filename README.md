@@ -2,6 +2,10 @@
 
 > A Vue.js project
 
+
+
+![readme](readme.png)
+
 ## Build Setup
 
 ``` bash
