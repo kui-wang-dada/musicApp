@@ -1,24 +1,8 @@
 <template>
   <transition name='slide'>
-
-    <scroll>
-      <div class='singer-detail'>
-        <div v-for='(item,index) in songList'
-             class='song-item'
-             @click='select(item)'
-             :key='index'>
-          <img :src="item.image"
-               class='song-img'
-               alt="">
-          <p>{{item.name}}</p>
-        </div>
-        <audio :src="currentSong.url"
-               autoplay
-               class='audio'></audio>
-      </div>
-
-    </scroll>
-
+    <music-list :songs='songList'
+                :title='title'
+                :bgImage='bgImage'></music-list>
   </transition>
 
 </template>
@@ -27,10 +11,10 @@
 import {mapGetters} from 'vuex'
 import {getSingerDetail} from 'api/singer'
 import {createSong} from 'common/js/song.js'
-import Scroll from 'base/scroll/scroll'
+import MusicList from 'components/music-list/music-list'
 
 export default {
-  components: {Scroll},
+  components: {MusicList},
   props: {},
   data() {
     return {
@@ -39,6 +23,12 @@ export default {
     }
   },
   computed: {
+    title() {
+      return this.singer.name
+    },
+    bgImage() {
+      return this.singer.avatar
+    },
     ...mapGetters([
       'singer'
     ])
@@ -54,6 +44,10 @@ export default {
       this.currentSong = item
     },
     _getSingerDetail() {
+      if (!this.singer.id) {
+        this.$router.push('/singer')
+      }
+
       getSingerDetail(this.singer.id).then((res) => {
         this.songList = this._normalizeSong(res.data.list)
       })
@@ -74,28 +68,6 @@ export default {
 </script>
 <style scoped lang='scss'>
 @import '~common/styles/variable';
-.singer-detail {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background: $color-background;
-  .song-item {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    .song-img {
-      width: 50px;
-      height: 50px;
-    }
-  }
-  .audio {
-    position: absolute;
-    top: 300px;
-  }
-}
 
 // vue的动画
 .slide-enter-active,
