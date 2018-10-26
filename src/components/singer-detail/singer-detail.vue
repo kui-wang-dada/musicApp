@@ -18,8 +18,8 @@ export default {
   props: {},
   data() {
     return {
-      songList: [],
-      currentSong: ''
+      songList: []
+
     }
   },
   computed: {
@@ -40,9 +40,6 @@ export default {
 
   },
   methods: {
-    select(item) {
-      this.currentSong = item
-    },
     _getSingerDetail() {
       if (!this.singer.id) {
         this.$router.push('/singer')
@@ -60,6 +57,7 @@ export default {
         }
       })
     }
+
   },
   watch: {
 

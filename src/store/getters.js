@@ -6,3 +6,4 @@
  * @Description: 提取数据
  */
 export const singer = state => state.singer
+export const currentSong = state => state.currentSong

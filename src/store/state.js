@@ -6,7 +6,8 @@
  * @Description: vuex全局状态数据
  */
 const state = {
-  singer: {}
+  singer: {},
+  currentSong: ''
 }
 
 export default state

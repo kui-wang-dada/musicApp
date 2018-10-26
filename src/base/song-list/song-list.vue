@@ -1,20 +1,22 @@
 <!-- 歌曲列表 -->
 <template>
-    <div class=song-list>
-        <ul>
-            <li v-for='(song,index) in songs'
-                :key='index'
-                class=item>
-                <div class='content'>
-                    <h2 class='name'>{{song.name}}</h2>
-                    <p class='desc'>{{getDesc(song)}}</p>
-                </div>
-            </li>
-        </ul>
-    </div>
+  <div class=song-list>
+    <ul>
+      <li v-for='(song,index) in songs'
+          :key='index'
+          @click='selectItem(song,index)'
+          class=item>
+        <div class='content'>
+          <h2 class='name'>{{song.name}}</h2>
+          <p class='desc'>{{getDesc(song)}}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   components: {},
   props: {
@@ -41,7 +43,13 @@ export default {
   methods: {
     getDesc(song) {
       return `${song.singer}·${song.album}`
-    }
+    },
+    selectItem(song, index) {
+      this.setSong(song.url)
+    },
+    ...mapMutations({
+      setSong: 'CURRENT_SONG'
+    })
   }
 }
 

@@ -6,3 +6,4 @@
  * @Description: mutations的标识
  */
 export const SET_SINGER = 'SET_SINGER'
+export const CURRENT_SONG = 'CURRENT_SONG'
