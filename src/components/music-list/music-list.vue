@@ -44,10 +44,11 @@
 import Scroll from 'base/scroll/scroll'
 import SongList from 'base/song-list/song-list'
 import {prefixStyle} from 'common/js/dom.js' // 引入浏览器兼容写法
-
+// 浏览器兼容性
 const transform = prefixStyle('transform')
 const backdrop = prefixStyle('backdrop-filter')
 
+// 头部高度的常量
 const RESERVED_HEIGHT = 40
 export default {
   components: {Scroll, SongList},
@@ -74,6 +75,7 @@ export default {
     }
   },
   computed: {
+    // 背景图
     bgStyle() {
       return `background-image:url(${this.bgImage})`
     }
@@ -84,6 +86,7 @@ export default {
     this.listenScroll = true
   },
   mounted() {
+    // 得到图片高度赋值给歌曲列表，同时标记头部底到图片底的位置大小
     this.imageHeight = this.$refs.bgImage.clientHeight
     this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT
     this.$refs.list.$el.style.top = `${this.imageHeight}px`
@@ -93,27 +96,31 @@ export default {
       this.scrollY = pos.y
     },
     back() {
+      // 路由返回
       this.$router.back()
     }
   },
   watch: {
     scrollY(newY) {
+      // 列表滑动到头部之前
       let translateY = Math.max(this.minTranslateY, newY)
+      // 控制特效层的z-index
       let zIndex = 0
       // 下拉的时候放大背景图
       let scale = 1
       // 上移的时候模糊背景图
       let blur = 0
+      // 上滑下拉相对图片的比例
       const percent = Math.abs(newY / this.imageHeight)
 
-      if (newY > 0) {
+      if (newY > 0) { // 下拉时
         zIndex = 10
         scale = 1 + percent
-      } else {
+      } else { // 上滑
         blur = Math.min(20 * percent, 20)
       }
 
-      if (newY < this.minTranslateY) {
+      if (newY < this.minTranslateY) { // 当滑动到头部时
         zIndex = 10
         this.$refs.bgImage.style.paddingTop = 0
         this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
