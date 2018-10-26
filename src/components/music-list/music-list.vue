@@ -1,36 +1,41 @@
 <!--歌手详情页样式-->
 <template>
-    <div class=music-list>
-        <div class=back>
-            <i class='icon-back'></i>
-        </div>
-        <h1 class='title'
-            v-html='title'></h1>
-        <div class=bg-image
-             :style='bgStyle'
-             ref='bgImage'>
-            <div class=filter
-                 ref=filter></div>
-        </div>
-        <div class=bg-layer
-             ref=layer></div>
-        <scroll :data='songs'
-                @scroll='scroll'
-                :probe-type='probeType'
-                :listen-scroll='listenScroll'
-                class='list'
-                ref='list'>
-            <div class=song-list-wrapper>
-                <song-list :songs="songs"></song-list>
-            </div>
-        </scroll>
+  <div class=music-list>
+    <!-- 返回键 -->
+    <div class=back>
+      <i class='icon-back'></i>
     </div>
+    <!-- 主标题 -->
+    <h1 class='title'
+        v-html='title'></h1>
+    <!-- 背景图 -->
+    <div class=bg-image
+         :style='bgStyle'
+         ref='bgImage'>
+      <div class=filter
+           ref=filter></div>
+    </div>
+    <!-- 上拉下拉效果层 -->
+    <div class=bg-layer
+         ref=layer></div>
+    <!-- 歌曲列表 -->
+    <scroll :data='songs'
+            @scroll='scroll'
+            :probe-type='probeType'
+            :listen-scroll='listenScroll'
+            class='list'
+            ref='list'>
+      <div class=song-list-wrapper>
+        <song-list :songs="songs"></song-list>
+      </div>
+    </scroll>
+  </div>
 </template>
 
 <script>
 import Scroll from 'base/scroll/scroll'
 import SongList from 'base/song-list/song-list'
-
+// 头部高度
 const RESERVED_HEIGHT = 40
 export default {
   components: {Scroll, SongList},
@@ -57,6 +62,7 @@ export default {
     }
   },
   computed: {
+    // 背景图
     bgStyle() {
       return `background-image:url(${this.bgImage})`
     }
@@ -67,16 +73,19 @@ export default {
     this.listenScroll = true
   },
   mounted() {
+    // 因为图片的高度是百分比表示，故动态获得图片高度赋值给歌曲列表
     this.imageHeight = this.$refs.bgImage.clientHeight
     this.minTranslateY = -this.imageHeight + RESERVED_HEIGHT
     this.$refs.list.$el.style.top = `${this.imageHeight}px`
   },
   methods: {
+    // 监听歌曲列表滚动的位置，有scroll组件返回
     scroll(pos) {
       this.scrollY = pos.y
     }
   },
   watch: {
+    // 监听位置
     scrollY(newY) {
       let translateY = Math.max(this.minTranslateY, newY)
       this.$refs.layer.style['transform'] = `translate3d(0,${translateY}px,0)`

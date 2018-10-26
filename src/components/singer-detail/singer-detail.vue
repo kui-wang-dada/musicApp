@@ -18,40 +18,49 @@ export default {
   props: {},
   data() {
     return {
+      // 歌曲列表
       songList: [],
+      // 默认播放歌曲
       currentSong: ''
     }
   },
   computed: {
+    // 歌手详情页标题
     title() {
       return this.singer.name
     },
+    // 歌手详情页背景图
     bgImage() {
       return this.singer.avatar
     },
+    // vuex的get方法
     ...mapGetters([
       'singer'
     ])
   },
   created() {
+    // 抓取数据
     this._getSingerDetail()
   },
   mounted() {
 
   },
   methods: {
+    // 切歌
     select(item) {
       this.currentSong = item
     },
+    // 边界处理
     _getSingerDetail() {
       if (!this.singer.id) {
         this.$router.push('/singer')
       }
-
+      // 获取歌曲列表并对数据进行处理
       getSingerDetail(this.singer.id).then((res) => {
         this.songList = this._normalizeSong(res.data.list)
       })
     },
+    // 处理接口返回的数据为我们需要的样式结构
     _normalizeSong(list) {
       return list.map((item) => {
         let {musicData} = item
