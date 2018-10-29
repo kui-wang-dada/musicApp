@@ -5,25 +5,24 @@
     <keep-alive>
       <router-view></router-view>
     </keep-alive>
-    <audio :src="currentSong"
-           autoplay></audio>
+    <player></player>
   </div>
 </template>
 
 <script>
 import MHeader from 'components/m-header/m-header'
+import Player from 'components/player/player'
 import Tab from 'components/tab/tab'
-import {mapGetters} from 'vuex'
+
 export default {
   name: 'App',
   computed: {
-    ...mapGetters([
-      'currentSong'
-    ])
+
   },
   components: {
     MHeader,
-    Tab
+    Tab,
+    Player
   }
 }
 </script>

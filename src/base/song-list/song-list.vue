@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
   components: {},
   props: {
@@ -45,11 +45,12 @@ export default {
       return `${song.singer}·${song.album}`
     },
     selectItem(song, index) {
-      this.setSong(song.url)
+      console.log('songs', this.songs)
+      this.selectPlay({list: this.songs, index})
     },
-    ...mapMutations({
-      setSong: 'CURRENT_SONG'
-    })
+    ...mapActions([
+      'selectPlay'
+    ])
   }
 }
 
