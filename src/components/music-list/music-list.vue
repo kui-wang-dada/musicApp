@@ -42,6 +42,7 @@
 
 <script>
 import Scroll from 'base/scroll/scroll'
+import Loading from 'base/loading/loading'
 import SongList from 'base/song-list/song-list'
 import {prefixStyle} from 'common/js/dom.js' // 引入浏览器兼容写法
 // 浏览器兼容性
@@ -51,7 +52,7 @@ const backdrop = prefixStyle('backdrop-filter')
 // 头部高度的常量
 const RESERVED_HEIGHT = 40
 export default {
-  components: {Scroll, SongList},
+  components: {Scroll, SongList, Loading},
   props: {
     //   背景图
     bgImage: {

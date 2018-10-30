@@ -8,7 +8,8 @@ import store from './store'
 import VueLazyLoad from 'vue-lazyload'
 import fastclick from 'fastclick'
 
-import 'common/styles/index.scss'
+import './common/styles/index.scss'
+
 fastclick.attach(document.body)
 
 Vue.config.productionTip = false
