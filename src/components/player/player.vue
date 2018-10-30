@@ -39,11 +39,17 @@
         <div class=bottom>
           <div class=progress-wrapper>
             <span class='time time-l'>{{format(currentTime)}}</span>
+            <div class='progress-bar-wrapper'>
+              <progress-bar :percent='percent'
+                            @percentChange='onProgressBarChange'></progress-bar>
+
+            </div>
             <span class='time time-r'>{{format(currentSong.duration)}}</span>
           </div>
           <div class=operators>
-            <div class='icon i-left'>
-              <i class='icon-sequence'></i>
+            <div class='icon i-left'
+                 @click="changeMode">
+              <i :class='iconMode'></i>
             </div>
             <div class='icon i-left'>
               <i class='icon-prev'
@@ -80,9 +86,13 @@
           <p class='desc'>{{currentSong.singer}}</p>
         </div>
         <div class='control'>
-          <i class='icon-mini'
-             @click.stop='togglePlaying'
-             :class='miniIcon'></i>
+          <progress-circle :radius='radius'
+                           :percent='percent'>
+            <i class='icon-mini'
+               @click.stop='togglePlaying'
+               :class='miniIcon'></i>
+          </progress-circle>
+
         </div>
         <div class=control>
           <i class=icon-playlist></i>
@@ -94,6 +104,7 @@
            @play='ready'
            @timeupdate="updateTime"
            @error='error'
+           @ended='end'
            ref=audio></audio>
   </div>
 </template>
@@ -102,15 +113,20 @@
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import animations from 'create-keyframe-animation'
 import {prefixStyle} from 'common/js/dom'
+import {playMode} from 'common/js/config'
+import {shuffle} from 'common/js/utils'
+import ProgressBar from 'base/progress-bar/progress-bar'
+import ProgressCircle from 'base/progress-circle/progress-circle'
 
 const transform = prefixStyle('transform')
 export default {
-  components: {},
+  components: {ProgressBar, ProgressCircle},
   props: {},
   data() {
     return {
       songReady: false,
-      currentTime: 0
+      currentTime: 0,
+      radius: 32
     }
   },
   watch: {
@@ -133,6 +149,9 @@ export default {
     }
   },
   computed: {
+    percent() {
+      return this.currentTime / this.currentSong.duration
+    },
     // 中间图片的动画样式
     cdCls() {
       return this.playing ? 'play' : 'play pause'
@@ -145,8 +164,11 @@ export default {
     miniIcon() {
       return this.playing ? 'icon-pause-mini' : 'icon-play-mini'
     },
+    iconMode() {
+      return this.mode === playMode.sequence ? 'icon-sequence' : this.mode === playMode.loop ? 'icon-loop' : 'icon-random'
+    },
     ...mapGetters([
-      'playlist', 'fullScreen', 'currentSong', 'playing', 'currentIndex'
+      'playlist', 'fullScreen', 'currentSong', 'playing', 'currentIndex', 'mode', 'sequenceList'
     ])
   },
   created() {
@@ -206,6 +228,20 @@ export default {
     error() {
       this.songReady = true
     },
+    end() {
+      if (this.mode === playMode.loop) {
+        console.log(123)
+        this.loop()
+      } else {
+        console.log(324)
+        this.next()
+      }
+    },
+    loop() {
+      this.$refs.audio.currentTime = 0
+      this.$refs.audio.play()
+      this.setPlaying(true)
+    },
     // 监控时间
     updateTime(e) {
       this.currentTime = e.target.currentTime
@@ -217,6 +253,33 @@ export default {
       const minute = interval / 60 | 0
       const second = this._pad(interval % 60)
       return `${minute}:${second}`
+    },
+    // 调整歌曲的播放时间
+    onProgressBarChange(percent) {
+      const currentTime = this.currentSong.duration * percent
+      this.$refs.audio.currentTime = currentTime
+      if (!this.playing) {
+        this.togglePlaying()
+      }
+    },
+    // 歌曲模式
+    changeMode() {
+      const mode = (this.mode + 1) % 3
+      this.setPlayMode(mode)
+      let list = null
+      if (mode === playMode.random) {
+        list = shuffle(this.sequenceList)
+      } else {
+        list = this.sequenceList
+      }
+      this.resetCurrentIndex(list)
+      this.setPlaylist(list)
+    },
+    resetCurrentIndex(list) {
+      let index = list.findIndex((item) => {
+        return item.id === this.currentSong.id
+      })
+      this.setCurrentIndex(index)
     },
     /* 以下均为歌曲最大化最小化时的动画效果
     * enter 动画进入
@@ -298,7 +361,9 @@ export default {
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN',
       setPlaying: 'SET_PLAYING',
-      setCurrentIndex: 'SET_CURRENT_INDEX'
+      setCurrentIndex: 'SET_CURRENT_INDEX',
+      setPlayMode: 'SET_MODE',
+      setPlaylist: 'SET_PLAY_LIST'
     })
   }
 }
@@ -405,6 +470,29 @@ export default {
       position: absolute;
       bottom: 50px;
       width: 100%;
+      .progress-wrapper {
+        display: flex;
+        align-items: center;
+        width: 80%;
+        margin: 0 auto;
+        padding: 10px 0;
+        .time {
+          color: $color-text;
+          font-size: $font-size-small;
+          flex: 0 0 30px;
+          line-height: 30px;
+          width: 30px;
+          &.time-l {
+            text-align: left;
+          }
+          &.time-r {
+            text-align: right;
+          }
+        }
+        .progress-bar-wrapper {
+          flex: 1;
+        }
+      }
       .operators {
         display: flex;
         align-items: center;
@@ -510,9 +598,9 @@ export default {
       }
       .icon-mini {
         font-size: 32px;
-        // position: absolute;
-        // left: 0;
-        // top: 0;
+        position: absolute;
+        left: 0;
+        top: 0;
       }
     }
     &.mini-enter-active,

@@ -13,6 +13,7 @@
       <div class="play-wrapper">
         <div ref="playBtn"
              v-show="songs.length>0"
+             @click="random"
              class="play">
           <i class="icon-play"></i>
           <span class="text">随机播放全部</span>
@@ -30,7 +31,8 @@
             class='list'
             ref='list'>
       <div class=song-list-wrapper>
-        <song-list :songs="songs"></song-list>
+        <song-list :songs="songs"
+                   @selectItem='selectItem'></song-list>
       </div>
       <div v-show="!songs.length"
            class="loading-container">
@@ -44,6 +46,7 @@
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import SongList from 'base/song-list/song-list'
+import {mapActions} from 'vuex'
 import {prefixStyle} from 'common/js/dom.js' // 引入浏览器兼容写法
 // 浏览器兼容性
 const transform = prefixStyle('transform')
@@ -99,7 +102,19 @@ export default {
     back() {
       // 路由返回
       this.$router.back()
-    }
+    },
+    selectItem(item, index) {
+      this.selectPlay({list: this.songs, index})
+    },
+    random() {
+      console.log(this.songs)
+      this.randomPlay({
+        list: this.songs
+      })
+    },
+    ...mapActions([
+      'selectPlay', 'randomPlay'
+    ])
   },
   watch: {
     scrollY(newY) {

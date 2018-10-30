@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
 export default {
   components: {},
   props: {
@@ -45,12 +44,8 @@ export default {
       return `${song.singer}·${song.album}`
     },
     selectItem(song, index) {
-      console.log('songs', this.songs)
-      this.selectPlay({list: this.songs, index})
-    },
-    ...mapActions([
-      'selectPlay'
-    ])
+      this.$emit('selectItem', song, index)
+    }
   }
 }
 
