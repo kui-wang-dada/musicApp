@@ -1,4 +1,5 @@
 <template>
+
   <transition name="slide">
     <music-list :title="title"
                 :bg-image="bgImage"
@@ -25,24 +26,31 @@ export default {
 
   },
   computed: {
+    // 标题
     title() {
       return this.disc.dissname
     },
+    // 背景图
     bgImage() {
       return this.disc.imgurl
     },
+    // 拿到默认歌单
     ...mapGetters([
       'disc'
     ])
   },
   created() {
-    console.log(1234)
     this._getSongList()
   },
   mounted() {
 
   },
   methods: {
+    /**
+     * @msg:拿到当前歌单详情
+     * @param {}
+     * @return:
+     */
     _getSongList() {
       if (!this.disc.dissid) {
         this.$router.push('/recommend')
@@ -54,6 +62,11 @@ export default {
         }
       })
     },
+    /**
+     * @msg:处理歌单数据
+     * @param {type}
+     * @return:
+     */
     _normalizeSongs(list) {
       let ret = []
       list.forEach((musicData) => {

@@ -70,7 +70,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e)
         })
       })
-
+      /**
+       * @msg:node路由转发 
+       * @param {type} 
+       * @return: 
+       */
       app.get('/api/getSongList', function (req, res) {
         var url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
         axios.get(url, {

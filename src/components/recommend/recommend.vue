@@ -85,18 +85,25 @@ export default {
 
   },
   methods: {
+    /**
+     * @msg: 设置默认歌单并跳转到歌单详情页
+     * @param {Object} item 当前歌单信息
+     * @return:
+     */
     selectItem(item) {
       this.$router.push({
         path: `/recommend/${item.dissid}`
       })
       this.setDisc(item)
     },
+
     handlePlaylist(playlist) {
       const bottom = playlist.length > 0 ? '60px' : ''
 
       this.$refs.recommend.style.bottom = bottom
       this.$refs.scroll.refresh()
     },
+
     _getRecommend() {
       getRecommend().then((res) => {
         if (res.code === ERR_OK) {
@@ -104,6 +111,7 @@ export default {
         }
       })
     },
+
     _getDiscList() {
       getDiscList().then((res) => {
         if (res.code === ERR_OK) {
@@ -117,6 +125,11 @@ export default {
         this.$refs.scroll.refresh()
       }
     },
+    /**
+     * @msg:vuex设置默认歌单
+     * @param {type}
+     * @return:
+     */
     ...mapMutations({
       setDisc: 'SET_DISC'
     })

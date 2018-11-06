@@ -6,7 +6,8 @@ import {
 import axios from 'axios'
 
 export function getRecommend() {
-  const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
+  const url =
+    'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'
 
   const data = Object.assign({}, commonParams, {
     platform: 'h5',
@@ -32,16 +33,21 @@ export function getDiscList() {
     sin: 0,
     ein: 29,
     format: 'json'
-
   })
 
-  return axios.get(url, {
-    params: data
-  }).then(res => {
-    return Promise.resolve(res.data)
-  })
+  return axios
+    .get(url, {
+      params: data
+    })
+    .then(res => {
+      return Promise.resolve(res.data)
+    })
 }
-
+/**
+ * @msg:抓取歌单详情页
+ * @param {Number} disstid 歌单ID
+ * @return: promise
+ */
 export function getSongList(disstid) {
   // const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
   const url = '/api/getSongList'
@@ -58,10 +64,12 @@ export function getSongList(disstid) {
     needNewCode: 1
   })
 
-  return axios.get(url, {
-    params: data
-  }).then(res => {
-    console.log('tt', res)
-    return Promise.resolve(res.data)
-  })
+  return axios
+    .get(url, {
+      params: data
+    })
+    .then(res => {
+      console.log('tt', res)
+      return Promise.resolve(res.data)
+    })
 }
