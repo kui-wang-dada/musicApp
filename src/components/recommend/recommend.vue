@@ -93,6 +93,11 @@ export default {
         }
       })
     },
+    /**
+     * @msg:边界处理
+     * @param {}
+     * @return:
+     */
     loadImage() {
       if (!this.checkloaded) {
         this.checkloaded = true
