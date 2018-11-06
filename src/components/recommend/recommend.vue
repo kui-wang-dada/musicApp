@@ -79,6 +79,11 @@ export default {
 
   },
   methods: {
+    /**
+     * @msg: 抓取轮播图的数据
+     * @param {}
+     * @return:
+     */
     _getRecommend() {
       getRecommend().then((res) => {
         if (res.code === ERR_OK) {
@@ -86,6 +91,11 @@ export default {
         }
       })
     },
+    /**
+     * @msg: 抓取歌单数据
+     * @param {}
+     * @return:
+     */
     _getDiscList() {
       getDiscList().then((res) => {
         if (res.code === ERR_OK) {
@@ -93,6 +103,11 @@ export default {
         }
       })
     },
+    /**
+     * @msg:边界处理
+     * @param {type}
+     * @return:
+     */
     loadImage() {
       if (!this.checkloaded) {
         this.checkloaded = true
