@@ -2,7 +2,7 @@
  * @Author: kuiwang3
  * @CreateDate: Do not edit
  * @LastEditors: kuiwang3
- * @LastEditTime: 2018-10-22 19:18:00
+ * @LastEditTime: 2018-11-06 13:59:57
  * @Description: 提取数据
  */
 export const singer = state => state.singer
@@ -18,3 +18,5 @@ export const currentIndex = state => state.currentIndex
 export const currentSong = (state) => {
   return state.playlist[state.currentIndex] || {}
 }
+
+export const disc = state => state.disc

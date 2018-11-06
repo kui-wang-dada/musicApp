@@ -48,7 +48,6 @@ export default {
     }
   }
 }
-
 </script>
 <style scoped lang='scss'>
 @import '~common/styles/variable';

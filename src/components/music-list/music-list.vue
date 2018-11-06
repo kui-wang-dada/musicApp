@@ -47,6 +47,7 @@ import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import SongList from 'base/song-list/song-list'
 import {mapActions} from 'vuex'
+import {playlistMixin} from 'common/js/mixin'
 import {prefixStyle} from 'common/js/dom.js' // 引入浏览器兼容写法
 // 浏览器兼容性
 const transform = prefixStyle('transform')
@@ -55,6 +56,7 @@ const backdrop = prefixStyle('backdrop-filter')
 // 头部高度的常量
 const RESERVED_HEIGHT = 40
 export default {
+  mixins: [playlistMixin],
   components: {Scroll, SongList, Loading},
   props: {
     //   背景图
@@ -111,6 +113,11 @@ export default {
       this.randomPlay({
         list: this.songs
       })
+    },
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+      this.$refs.list.$el.style.bottom = bottom
+      this.$refs.list.refresh()
     },
     ...mapActions([
       'selectPlay', 'randomPlay'

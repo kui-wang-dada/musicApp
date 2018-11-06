@@ -132,6 +132,9 @@ export default {
     scroll(pos) {
       this.scrollY = pos.y
     },
+    refresh() {
+      this.$refs.listview.refresh()
+    },
     // 滚动到指定位置
     _scrollTo(index) {
       // 异常处理

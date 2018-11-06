@@ -13,12 +13,14 @@ import ListView from 'base/listview/listview'
 import {getSingerList} from 'api/singer'
 import Singer from 'common/js/singer'
 import {ERR_OK} from 'api/config'
+import {playlistMixin} from 'common/js/mixin'
 import {mapMutations} from 'vuex' // mutations语法糖
 
 const HOT_SINGER_LEN = 10
 const HOT_NAME = '热门'
 
 export default {
+  mixins: [playlistMixin],
   components: {ListView},
   props: {},
   data () {
@@ -39,6 +41,11 @@ export default {
 
   },
   methods: {
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+      this.$refs.singer.style.bottom = bottom
+      this.$refs.list.refresh()
+    },
     selectSinger(singer) {
       console.log(singer)
       this.$router.push({

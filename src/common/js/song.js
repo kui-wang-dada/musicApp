@@ -1,5 +1,14 @@
 // 创建歌曲类
 
+import {
+  getLyric
+} from 'api/song'
+import {
+  ERR_OK
+} from 'api/config'
+import {
+  Base64
+} from 'js-base64'
 export class Song {
   constructor({
     id,
@@ -20,7 +29,25 @@ export class Song {
     this.image = image
     this.url = url
   }
+
+  getLyric() {
+    if (this.lyric) {
+      return Promise.resolve(this.lyric)
+    }
+
+    return new Promise((resolve, reject) => {
+      getLyric(this.mid).then((res) => {
+        if (res.retcode === ERR_OK) {
+          this.lyric = Base64.decode(res.lyric)
+          resolve(this.lyric)
+        } else {
+          reject(new Error('no lyric'))
+        }
+      })
+    })
+  }
 }
+
 // 工厂函数创造歌曲实例
 export function createSong(musicData) {
   return new Song({
