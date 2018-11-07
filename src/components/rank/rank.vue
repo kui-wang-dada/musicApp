@@ -16,6 +16,7 @@
           </div>
           <ul class="songlist">
             <li class="song"
+                :key='index'
                 v-for="(song,index) in item.songList">
               <span>{{index + 1}}</span>
               <span>{{song.songname}}-{{song.singername}}</span>
@@ -31,67 +32,71 @@
     <router-view></router-view>
   </div>
 </template>
-
 <script type="text/ecmascript-6">
-  import Scroll from 'base/scroll/scroll'
-  import Loading from 'base/loading/loading'
-  import {getTopList} from 'api/rank'
-  import {ERR_OK} from 'api/config'
-  import {playlistMixin} from 'common/js/mixin'
+import Scroll from 'base/scroll/scroll'
+import Loading from 'base/loading/loading'
+import {getTopList} from 'api/rank'
+import {ERR_OK} from 'api/config'
+import {playlistMixin} from 'common/js/mixin'
+import { mapMutations } from 'vuex'
 
-  export default {
-    mixins: [playlistMixin],
-    created() {
-      this._getTopList()
-    },
-    data() {
-      return {
-        topList: []
-      }
-    },
-    methods: {
-      /**
+export default {
+  mixins: [playlistMixin],
+  created() {
+    this._getTopList()
+  },
+  data() {
+    return {
+      topList: []
+    }
+  },
+  methods: {
+    /**
        * @msg: mixin混入内容
        * @param {Array} playlist 页面数据
        * @return:
        */
-      handlePlaylist(playlist) {
-        const bottom = playlist.length > 0 ? '60px' : ''
+    handlePlaylist(playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
 
-        this.$refs.rank.style.bottom = bottom
-        this.$refs.toplist.refresh()
-      },
-      /**
+      this.$refs.rank.style.bottom = bottom
+      this.$refs.toplist.refresh()
+    },
+    /**
        * @msg:跳入详情页
        * @param {item} 当前点击页面item
        * @return:
        */
-      selectItem(item) {
-        this.$router.push({
-          path: `/rank/${item.id}`
-        })
-      },
-      /**
+    selectItem(item) {
+      this.setTopList(item)
+      this.$router.push({
+        path: `/rank/${item.id}`
+      })
+    },
+    /**
        * @msg:抓取数据
        * @param {type}
        * @return:
        */
-      _getTopList() {
-        getTopList().then((res) => {
-          if (res.code === ERR_OK) {
-            this.topList = res.data.topList
-          }
-        })
-      }
+    _getTopList() {
+      getTopList().then((res) => {
+        if (res.code === ERR_OK) {
+          this.topList = res.data.topList
+        }
+      })
     },
-    watch: {
-  
-    },
-    components: {
-      Scroll,
-      Loading
-    }
+    ...mapMutations({
+      setTopList: 'SET_TOP_LIST'
+    })
+  },
+  watch: {
+
+  },
+  components: {
+    Scroll,
+    Loading
   }
+}
 </script>
 
 <style scoped lang="scss" >

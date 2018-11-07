@@ -2,7 +2,7 @@
  * @Author: kuiwang3
  * @CreateDate: Do not edit
  * @LastEditors: kuiwang3
- * @LastEditTime: 2018-11-06 19:51:53
+ * @LastEditTime: 2018-11-07 18:38:58
  * @Description: vuex全局状态数据
  */
 import {
@@ -18,7 +18,8 @@ const state = {
   mode: playMode.sequence, // 当前歌曲播放模式
   currentIndex: -1, // 当前播放歌曲的index
 
-  disc: {} // 歌单
+  disc: {}, // 歌单
+  topList: {} // 排行详情
 
 }
 

@@ -32,6 +32,7 @@
             ref='list'>
       <div class=song-list-wrapper>
         <song-list :songs="songs"
+                   :rank='rank'
                    @selectItem='selectItem'></song-list>
       </div>
       <div v-show="!songs.length"
@@ -73,6 +74,11 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    // 是否为排行页面
+    rank: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
