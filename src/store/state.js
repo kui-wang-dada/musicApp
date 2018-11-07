@@ -2,7 +2,7 @@
  * @Author: kuiwang3
  * @CreateDate: Do not edit
  * @LastEditors: kuiwang3
- * @LastEditTime: 2018-11-06 13:59:28
+ * @LastEditTime: 2018-11-06 19:51:53
  * @Description: vuex全局状态数据
  */
 import {
@@ -19,6 +19,7 @@ const state = {
   currentIndex: -1, // 当前播放歌曲的index
 
   disc: {} // 歌单
+
 }
 
 export default state

@@ -2,7 +2,7 @@
  * @Author: kuiwang3
  * @CreateDate: Do not edit
  * @LastEditors: kuiwang3
- * @LastEditTime: 2018-11-06 14:00:49
+ * @LastEditTime: 2018-11-06 19:51:50
  * @Description: mutations事件，用于更改数据
  */
 import * as types from './mutation-types'
@@ -33,6 +33,7 @@ const mutations = {
   [types.SET_DISC](state, disc) {
     state.disc = disc
   }
+
 }
 
 export default mutations

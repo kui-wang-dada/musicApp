@@ -4,7 +4,7 @@ import {
 import axios from 'axios'
 
 export function getLyric(mid) {
-  const url = 'http://localhost:3000/music/lyric'
+  const url = '/api/lyric'
 
   const data = Object.assign({}, commonParams, {
     songmid: mid,

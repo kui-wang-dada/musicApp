@@ -2,7 +2,7 @@
  * @Author: kuiwang3
  * @CreateDate: Do not edit
  * @LastEditors: kuiwang3
- * @LastEditTime: 2018-10-22 19:17:02
+ * @LastEditTime: 2018-11-06 19:51:45
  * @Description: vuex的中枢，需要导入到vue实例中
  */
 import Vue from 'vue'
