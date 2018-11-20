@@ -2,7 +2,7 @@
  * @Author: kuiwang3
  * @CreateDate: Do not edit
  * @LastEditors: kuiwang3
- * @LastEditTime: 2018-11-06 19:51:50
+ * @LastEditTime: 2018-11-14 19:21:06
  * @Description: mutations事件，用于更改数据
  */
 import * as types from './mutation-types'
@@ -35,6 +35,9 @@ const mutations = {
   },
   [types.SET_TOP_LIST](state, topList) {
     state.topList = topList
+  },
+  [types.SET_SEARCH_HISTORY](state, history) {
+    state.searchHistory = history
   }
 
 }

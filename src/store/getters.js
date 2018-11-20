@@ -2,7 +2,7 @@
  * @Author: kuiwang3
  * @CreateDate: Do not edit
  * @LastEditors: kuiwang3
- * @LastEditTime: 2018-11-07 18:39:43
+ * @LastEditTime: 2018-11-14 18:31:00
  * @Description: 提取数据
  */
 export const singer = state => state.singer
@@ -21,3 +21,5 @@ export const currentSong = (state) => {
 
 export const disc = state => state.disc
 export const topList = state => state.topList
+
+export const searchHistory = state => state.searchHistory
